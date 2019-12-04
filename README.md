@@ -1,2 +1,8 @@
-# Just a brief intro to GIT concepts
-getting to know git
+# Rocketseat Bootcamp
+
+-> Chapter 01
+Environment setup, VSCode, terminal and plugins
+
+-> Fase 02 --- NodeJS ---
+1. Primary tools setup: Git, Node, Yarn
+2. Basic backend structure using Express
