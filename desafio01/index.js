@@ -14,9 +14,9 @@ app.use((req, res, next) => {
 
 function checkIfProjectExists (req, res, next) {
   const { id } = req.params;
-  //const project = projects.find(p => p.id == id);
+  const project = projects.find(p => p.id == id);
 
-  if(!projects[id]){
+  if(!project){
     res.status(400).json("Project does not exist!");
   }
 
@@ -47,21 +47,19 @@ app.post('/projects', (req, res) => {
 app.put('/projects/:id', checkIfProjectExists, (req, res) => {
   const { id } = req.params;
   const { title } = req.body;
-  //const project = projects.find(p => p.id == id);
+  const project = projects.find(p => p.id == id);
 
-  projects[id].title = title;
-  //project.title = title;
+  project.title = title;
 
-  return res.json(projects[id]);
+  return res.json(project);
 });
 
 //Delete project by id
 app.delete('/projects/:id', checkIfProjectExists, (req, res) => {
   const { id } = req.params;
-  // const projectIndex = projects.findIndex(p => p.id == id);
-
-  projects.splice(id, 1);
-  //projects.splice(projectIndex,1);
+  const projectIndex = projects.findIndex(p => p.id == id);
+  
+  projects.splice(projectIndex,1);
 
   return res.send();
 
@@ -71,10 +69,11 @@ app.delete('/projects/:id', checkIfProjectExists, (req, res) => {
 app.post('/projects/:id/tasks', checkIfProjectExists, (req, res) => {
   const { id } = req.params;
   const { tasks } = req.body;
+  const project = projects.find(p => p.id == id);
 
-  projects[id].tasks.push(tasks);
+  project.tasks.push(tasks);
 
-  return res.json(projects[id]);
+  return res.json(project);
 });
 
 app.listen(3333);
