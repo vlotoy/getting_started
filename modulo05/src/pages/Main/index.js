@@ -8,6 +8,8 @@ import { Container, Form, SubmitButton } from './styles';
 export default class Main extends Component {
   state = {
     newRepo: '',
+    repositories: [],
+    loading: false,
   };
 
   handleInputChange = e => {
@@ -15,12 +17,23 @@ export default class Main extends Component {
   };
 
   handleSubmit = async e => {
-    const { newRepo } = this.state;
     e.preventDefault();
 
-    const response = await api.get(`/repos/${newRepo}`);
+    this.setState({ loading: true });
+    const { newRepo, repositories } = this.state;
 
-    console.log(response.data);
+
+    const response = await api.get(`/repos/${newRepo}`);
+    const data = {
+      name: response.data.full_name,
+    };
+
+    // console.log(response.data);
+
+    this.setState({
+      repositories: [...repositories, data],
+      newRepo:'',
+    });
 
 
   }
